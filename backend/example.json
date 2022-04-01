@@ -1,0 +1,14 @@
+{
+  "name": "CVE-2022-ILOVEYOU",
+  "description": "Any description",
+  "severity": 5.1,
+  "complexity": "High",
+  "platform": "Windows",
+  "developer": "Microsoft",
+  "operationSystem": "Windows 10",
+  "version": "0.0.1",
+  "fixes": "<Link on fix>",
+  "user": "<MongoDB ObjectID>",
+  "createdAt": "2022-04-1T20:51:00Z",
+  "updatedAt": "2022-04-1T20:53:00Z"
+}

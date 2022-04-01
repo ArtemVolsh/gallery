@@ -1,14 +1,14 @@
-const Post = require("../Models/Post");
+const News = require("../Models/News");
 
-class PostController {
+class NewsController {
   getAllPosts = async (req, res, next) => {
-    const post = await Post.find();
+    const news = await News.find();
 
     res?.status(200).json({
       success: true,
-      data: post,
+      data: news,
     });
   };
 }
 
-module.exports = new PostController();
+module.exports = new NewsController();
