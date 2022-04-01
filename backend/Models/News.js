@@ -16,7 +16,7 @@ const News = new Schema({
   publishedDate: {
     type: Date,
     required: true,
-		immutable: true,
+    immutable: true,
     default: () => Date.now(),
   },
   updateDate: {

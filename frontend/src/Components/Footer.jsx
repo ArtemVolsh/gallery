@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
-    <>
-      <h1>Footer</h1>
-    </>
+    <footer className="footer-wrapper">
+      <span>Gallery 2022 - All rights reserved</span>
+    </footer>
   );
 };
 
