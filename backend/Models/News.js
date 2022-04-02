@@ -1,5 +1,27 @@
 const { Schema, model } = require("mongoose");
 
+const Feedback = new Schema({
+  content: {
+    type: String,
+    required: true,
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  publishedDate: {
+    type: Date,
+    required: true,
+    default: () => Date.now(),
+  },
+  updatedDate: {
+    type: Date,
+    required: true,
+    default: () => Date.now(),
+  },
+});
+
 const News = new Schema({
   name: {
     type: String,
@@ -11,8 +33,10 @@ const News = new Schema({
   },
   publishedBy: {
     type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
+  feedback: [{ type: Feedback }],
   publishedDate: {
     type: Date,
     required: true,
@@ -22,6 +46,7 @@ const News = new Schema({
   updateDate: {
     type: Date,
     required: true,
+    default: () => Date.now(),
   },
 });
 

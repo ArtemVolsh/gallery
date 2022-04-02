@@ -2,16 +2,17 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const Router = require("./Routes/router");
-const cors = require("./middlewares/cors.js");
+const cors = require("./Middlewares/cors.js");
 const Port = process.env.PORT;
 const ConnectionString = process.env.DB_CONSTRING;
+const createUser = require("./Utils/Utils");
 
 const app = express();
 
 app.use(cors);
 app.use(express.json());
 
-app.use("/api/posts", Router);
+app.use("/api/news", Router);
 
 const connectDB = async () => {
   try {
@@ -36,5 +37,7 @@ const start = async () => {
     console.log(e);
   }
 };
+
+// createUser()
 
 start();

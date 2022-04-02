@@ -1,7 +1,18 @@
+import { Container } from "@mui/material";
+
 const HomePage = () => {
   return (
     <div className="page-wrapper">
-      <h1>HomePage</h1>
+      <Container
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          padding: "24px 0",
+        }}
+      >
+        <h1>Gallery</h1>
+      </Container>
     </div>
   );
 };

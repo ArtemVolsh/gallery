@@ -1,8 +1,7 @@
 const express = require("express");
-const PostController = require("../Controllers/PostController");
+const NewsController = require("../Controllers/NewsController");
 const router = express.Router();
 
-// @route - /api/v1/cve
-router.route("/").get(PostController.getAllPosts);
+router.route("/").get(NewsController.getAllNews);
 
 module.exports = router;
