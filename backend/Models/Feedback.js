@@ -13,6 +13,7 @@ const Feedback = new Schema({
   publishedDate: {
     type: Date,
     required: true,
+    immutable: true,
     default: () => Date.now(),
   },
   updatedDate: {

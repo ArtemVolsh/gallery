@@ -1,22 +1,42 @@
+const Exhibition = require("../Models/Exhibition");
 const News = require("../Models/News");
 const User = require("../Models/User");
 
 async function createUser() {
   try {
-    const user = await News.create({
-      name: "Title 3",
-      content: "The best news content",
-      publishedBy: "624846a6fcf2d4fce22c9b7b",
+    // const news = await News.create({
+    //   name: "Title 3",
+    //   content: "The best news content",
+    //   publishedBy: "624846a6fcf2d4fce22c9b7b",
+    //   feedback: [
+    //     {
+    //       content: "Hello, this is my comment!",
+    //       author: "624846a6fcf2d4fce22c9b7b",
+    //     },
+    //   ],
+    // });
+    const exhibition = await Exhibition.create({
+      name: "12 rules of life",
+      place: "Ottava",
+      content: "The exhibition is about the book",
+      status: 0,
+      endDate: Date.now(),
+      theme: "Chaos and order",
+      price: 15,
       feedback: [
         {
           content: "Hello, this is my comment!",
           author: "624846a6fcf2d4fce22c9b7b",
         },
+        {
+          content: "Hello, this is my another comment!",
+          author: "624846a6fcf2d4fce22c9b7b",
+        },
       ],
     });
 
-    await user.save();
-    console.log(user);
+    await exhibition.save();
+    console.log(exhibition);
   } catch (e) {
     console.log(e);
   }

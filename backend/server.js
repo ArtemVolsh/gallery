@@ -12,7 +12,9 @@ const app = express();
 app.use(cors);
 app.use(express.json());
 
-app.use("/api/news", Router);
+app.use("/api", Router);
+
+
 
 const connectDB = async () => {
   try {

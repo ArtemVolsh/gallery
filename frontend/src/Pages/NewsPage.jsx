@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Grid, Card } from "@mui/material";
+import { Container, Grid, Paper } from "@mui/material";
 import axios from "axios";
 
 const NewsPage = () => {
@@ -51,12 +51,18 @@ const NewsPage = () => {
           <h1>NewsPage</h1>
           <Grid container spacing={2}>
             {news.map((newsItem) => (
-              <Grid key={newsItem._id} item xs={8}>
-                <span>{newsItem.name}</span>
-                <p>{newsItem.content}</p>
-                <p>{newsItem.feedback.map((feedbackItem) => (
-									<span>{feedbackItem.content}</span>
-								))}</p>
+              <Grid key={newsItem._id} item xs={4}>
+                <Paper sx={{ padding: "10px" }}>
+                  <span>{newsItem.name}</span>
+                  <p>{newsItem.content}</p>
+                  <p>
+                    {newsItem.feedback.map((feedbackItem) => (
+                      <>
+                        <div>{feedbackItem.content}</div>
+                      </>
+                    ))}
+                  </p>
+                </Paper>
               </Grid>
             ))}
           </Grid>
