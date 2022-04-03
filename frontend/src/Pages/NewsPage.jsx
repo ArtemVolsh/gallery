@@ -48,7 +48,7 @@ const NewsPage = () => {
             padding: "24px 0",
           }}
         >
-          <h1>NewsPage</h1>
+          <h1 style={{ marginBottom: "15px" }}>News Page</h1>
           <Grid container spacing={2}>
             {news.map((newsItem) => (
               <Grid key={newsItem._id} item xs={4}>

@@ -1,14 +1,39 @@
-{
-  "name": "CVE-2022-ILOVEYOU",
-  "description": "Any description",
-  "severity": 5.1,
-  "complexity": "High",
-  "platform": "Windows",
-  "developer": "Microsoft",
-  "operationSystem": "Windows 10",
-  "version": "0.0.1",
-  "fixes": "<Link on fix>",
-  "user": "<MongoDB ObjectID>",
-  "createdAt": "2022-04-1T20:51:00Z",
-  "updatedAt": "2022-04-1T20:53:00Z"
-}
+[
+  {
+    "name": "CVE-2022-ILOVEYOU",
+    "description": "Any description",
+    "severity": 5.1,
+    "complexity": "High",
+    "platform": "Windows",
+    "developer": "Microsoft",
+    "operationSystem": "Windows 10",
+    "version": "0.0.1",
+    "fixes": "<Link on fix>",
+    "user": "<MongoDB ObjectID>",
+    "createdAt": "2022-04-1T20:51:00Z",
+    "updatedAt": "2022-04-1T20:53:00Z"
+  },
+  // TService Payload:
+  {
+    "email": "artem@gmail.com",
+    "id": "6249dca2f9e2b1e3cac67f4a",
+    "username": "newuser"
+  },
+  // TService Payload after signing:
+  {
+    "email": "artem@gmail.com",
+    "id": "6249dca2f9e2b1e3cac67f4a",
+    "username": "newuser"
+  },
+  // UService tokens after signing
+  {
+    "accessToken":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydGVtQGdtYWlsLmNvbSIsImlkIjoiNjI0OWRjYTJmOWUyYjFlM2NhYzY3ZjRhIiwidXNlcm5hbWUiOiJuZXd1c2VyIiwiaWF0IjoxNjQ5MDA3Nzc4LCJleHAiOjE2NDkwOTQxNzh9.0pCYf0Pb39mvcuZc4XRanGK0s-_ONr8yxFlw8BWlxwc",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFydGVtQGdtYWlsLmNvbSIsImlkIjoiNjI0OWRjYTJmOWUyYjFlM2NhYzY3ZjRhIiwidXNlcm5hbWUiOiJuZXd1c2VyIiwiaWF0IjoxNjQ5MDA3Nzc4LCJleHAiOjE2NTE1OTk3Nzh9.QAb3-hZDf2tRn5fnMYqCQFlVwkG3PtRkqhFTUU0IVIg"
+  },
+  // UService DTO
+  {
+    "email": "artem@gmail.com",
+    "id": "6249dca2f9e2b1e3cac67f4a",
+    "username": "newuser"
+  }
+]

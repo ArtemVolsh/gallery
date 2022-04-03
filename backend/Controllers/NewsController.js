@@ -22,6 +22,9 @@ class NewsController {
       data: news,
     });
   };
+
+	
+
 }
 
 module.exports = new NewsController();

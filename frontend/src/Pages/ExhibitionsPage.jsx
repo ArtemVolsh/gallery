@@ -48,17 +48,17 @@ const ExhibitionsPage = () => {
             padding: "24px 0",
           }}
         >
-          <h1>Exhibitions News</h1>
+          <h1 style={{ marginBottom: "15px" }}>Exhibitions Page</h1>
           <Grid container spacing={2}>
             {exhibitions.map((exhs) => (
-              <Grid key={exhs._id} item xs={4}>
+              <Grid key={`grid-${exhs._id}`} item xs={4}>
                 <Paper sx={{ padding: "10px" }}>
                   <span>{exhs.name}</span>
                   <p>{exhs.content}</p>
                   <p>
                     {exhs.feedback.map((feedbackItem) => (
                       <>
-                        <div>{feedbackItem.content}</div>
+                        <div key={feedbackItem._id}>{feedbackItem.content}</div>
                       </>
                     ))}
                   </p>
