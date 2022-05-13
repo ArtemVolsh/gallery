@@ -53,15 +53,19 @@ const ExhibitionsPage = () => {
             {exhibitions.map((exhs) => (
               <Grid key={`grid-${exhs._id}`} item xs={4}>
                 <Paper sx={{ padding: "10px" }}>
-                  <span>{exhs.name}</span>
-                  <p>{exhs.content}</p>
-                  <p>
+                  <h2 style={{ paddingBottom: "10px" }}>{exhs.name}</h2>
+                  <p style={{ paddingBottom: "5px" }}>
+                    {" "}
+                    <i>{exhs.content}</i>
+                  </p>
+                  <span>Comments:</span>
+                  <div className="comment-section">
                     {exhs.feedback.map((feedbackItem) => (
                       <>
                         <div key={feedbackItem._id}>{feedbackItem.content}</div>
                       </>
                     ))}
-                  </p>
+                  </div>
                 </Paper>
               </Grid>
             ))}

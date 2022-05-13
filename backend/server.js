@@ -14,8 +14,6 @@ app.use(express.json());
 
 app.use("/api", Router);
 
-
-
 const connectDB = async () => {
   try {
     await mongoose.connect(ConnectionString, {

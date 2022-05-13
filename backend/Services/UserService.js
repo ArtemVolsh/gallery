@@ -45,9 +45,7 @@ class UserService {
   };
   activate = async () => {};
 
-	login = async(email, username, password) {
-		const user = await 
-	}
+  login = async (email, username, password) => {};
 }
 
 module.exports = new UserService();
