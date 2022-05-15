@@ -1,11 +1,11 @@
 const { Schema, model } = require("mongoose");
 
 const User = new Schema({
-  username: {
+  email: {
     type: String,
+    lowercase: true,
     unique: true,
     required: true,
-    lowercase: true,
   },
   password: {
     type: String,
@@ -14,12 +14,6 @@ const User = new Schema({
   role: {
     type: String,
     ref: "Role",
-  },
-  email: {
-    type: String,
-    lowercase: true,
-    unique: true,
-    required: true,
   },
   activationLink: {
     type: String,

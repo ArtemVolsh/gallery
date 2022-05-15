@@ -1,38 +1,47 @@
 const { Schema, model } = require("mongoose");
 
-const Excursion = new Schema({
-  name: {
-    type: String,
-    required: true,
+const Excursion = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    place: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    offeredBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    status: {
+      type: Number,
+      default: 0,
+    },
+    image: {
+      type: String,
+      default:
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.accofusion.com%2Fpublic%2Fupload_image%2Faccident_media%2F&psig=AOvVaw2LT-8lK07SyiM0tPCluLpN&ust=1652695539689000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKicreig4fcCFQAAAAAdAAAAABAD",
+    },
+    feedback: [{ type: String, ref: "Feedback" }],
   },
-  place: {
-    type: String,
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    required: true,
-  },
-  price: {
-    type: Number,
-    required: false,
-    default: 0,
-  },
-  offeredBy: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  status: {
-    type: Number,
-    required: false,
-    default: 0,
-  },
-  feedback: [{ type: String, ref: "Feedback" }],
-});
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = model("Excursion", Excursion);

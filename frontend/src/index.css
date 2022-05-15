@@ -25,8 +25,24 @@ body {
   flex: 1 0 auto;
 }
 
+.sider-flex {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+}
+
+.sider-flex > * {
+	flex: 1 1 calc(50% - 2.5px);
+}
+
+.sider-flex :nth-child(5),
+.sider-flex :nth-child(6) {
+	flex: 1 1 100%;
+}
+
 .sider-wrapper {
   background: rgb(59, 150, 255);
+	padding: 20px;
 	flex-basis: 25%;
 }
 

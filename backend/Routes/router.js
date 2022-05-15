@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.route("/news").get(NewsController.getAllNews);
 router.route("/exhibitions").get(ExhibitionsController.getAllExhibitions);
+router.route("/excursions").get();
 router.route("/registration").post(AuthenticationController.registration);
 // router.route("/login").post(AuthenticationController.login);
 

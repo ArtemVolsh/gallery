@@ -8,7 +8,7 @@ const MailService = require("./MailService");
 const Role = require("../Models/Role");
 
 class UserService {
-  registration = async (email, password, username, phoneNumber) => {
+  registration = async (email, password, phoneNumber) => {
     const candidate = await User.findOne({ email });
 
     if (candidate) console.log(`User with this email: ${email} already exists`);
@@ -19,9 +19,8 @@ class UserService {
     const userRole = await Role.findOne({ value: "USER" });
 
     console.log(`User role: ${userRole.value}`);
-
+		
     const user = await User.create({
-      username,
       email,
       password: hashPassword,
       activationLink,
@@ -45,7 +44,30 @@ class UserService {
   };
   activate = async () => {};
 
-  login = async (email, username, password) => {};
+  logout = async (refreshToken) => {
+    const token = await TokenService.removeToken(refreshToken);
+    return token;
+  };
+
+  login = async (email, password) => {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return {
+        success: false,
+        message: "Wrong email, password combination",
+      };
+    }
+    const isPassEquals = await bcrypt.compare(password, user.password);
+    if (!isPassEquals) {
+      return {
+        success: false,
+        message: "Wrong email, password combination",
+      };
+    }
+    const userDto = new UserDTO(user);
+    const tokens = TokenService.generateTokens({ ...userDto });
+    return { ...tokens, user: userDto };
+  };
 }
 
 module.exports = new UserService();
