@@ -10,6 +10,8 @@ import { HomePage } from "./HomePage";
 import { InfoPage } from "./InfoPage";
 import { NewsPage } from "./NewsPage";
 import { NotFoundPage } from "./NotFoundPage";
+import { RegisterPage } from "./AuthPages/RegisterPage";
+import { LoginPage } from "./AuthPages/LoginPage";
 
 function App() {
   const isAuth = false;
@@ -22,6 +24,8 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="exhibitions" element={<ExhibitionsPage />} />
             <Route path="excursions" element={<ExcursionsPage />} />
+            <Route path="registration" element={<RegisterPage />} />
+            <Route path="login" element={<LoginPage />} />
             <Route path="gallery" element={<GalleryPage />} />
             <Route path="about" element={<InfoPage />} />
             <Route path="news" element={<NewsPage />} />

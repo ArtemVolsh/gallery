@@ -22,12 +22,11 @@ const ExhibitionsPage = () => {
           url: "http://localhost:5000/api/exhibitions",
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
-        console.log(`In function ${response}`);
+
         setExhibitions(response.data.data);
-        console.log(response.data.data);
       } catch (e) {
         console.log(e);
-        console.log(e.response.data);
+        console.log(e?.response?.data);
       }
     };
 

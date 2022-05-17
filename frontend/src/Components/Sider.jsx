@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TextField, Box, InputAdornment } from "@mui/material";
+import { TextField, Box, InputAdornment, Button } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import {
   LocalizationProvider,
@@ -15,18 +15,20 @@ const Sider = () => {
     content: "",
     theme: "",
     image: noImageLink,
-    status: 0,
     date: new Date(),
     endDate: new Date(),
     price: 0,
+    status: 0,
     rating: 0,
   };
+
   const [exhibition, setExhibition] = useState(defaultExhibition);
 
   const handleChangeInput = (prop) => (e) => {
-    console.log(e);
-    
-    setExhibition({ ...exhibition, [prop]: prop });
+    setExhibition({ ...exhibition, [prop]: e.target.value });
+  };
+  const handleChangePickers = (prop) => (e) => {
+    setExhibition({ ...exhibition, [prop]: null });
   };
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const Sider = () => {
               variant="filled"
               label="Name"
               placeholder="Provide name..."
+              sx={{ background: "white" }}
             ></TextField>
             <TextField
               name="place"
@@ -55,6 +58,7 @@ const Sider = () => {
               variant="filled"
               label="Place"
               placeholder="Provide place..."
+              sx={{ background: "white" }}
             ></TextField>
             <TextField
               name="theme"
@@ -63,6 +67,7 @@ const Sider = () => {
               variant="filled"
               label="Theme"
               placeholder="Provide theme..."
+              sx={{ background: "white" }}
             ></TextField>
             <TextField
               name="price"
@@ -76,6 +81,7 @@ const Sider = () => {
                   <InputAdornment position="start">₴</InputAdornment>
                 ),
               }}
+              sx={{ background: "white" }}
             ></TextField>
             <TextField
               name="image"
@@ -83,6 +89,7 @@ const Sider = () => {
               onChange={handleChangeInput("image")}
               variant="filled"
               label="Thumbnail URL"
+              sx={{ background: "white" }}
             ></TextField>
             <TextField
               name="content"
@@ -93,27 +100,47 @@ const Sider = () => {
               multiline
               rows={4}
               placeholder="Describe the exhibition..."
+              sx={{ background: "white" }}
             ></TextField>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 name="date"
                 label="Start Date"
                 value={exhibition.date}
-                onChange={handleChangeInput("date")}
+                onChange={handleChangePickers("date")}
                 renderInput={(params) => (
-                  <TextField variant="filled" {...params} />
+                  <TextField
+                    sx={{ background: "white" }}
+                    variant="filled"
+                    {...params}
+                  />
                 )}
               />
               <DatePicker
                 name="endDate"
                 label="End Date"
                 value={exhibition.endDate}
-                onChange={handleChangeInput("endDate")}
+                onChange={handleChangePickers("endDate")}
                 renderInput={(params) => (
-                  <TextField variant="filled" {...params} />
+                  <TextField
+                    sx={{ background: "white" }}
+                    variant="filled"
+                    {...params}
+                  />
                 )}
               />
             </LocalizationProvider>
+            <Button
+              sx={{
+                backgroundColor: "white",
+                color: "black",
+                ":hover": { backgroundColor: "gold" },
+              }}
+
+              variant="contained"
+            >
+              Add Exhibition
+            </Button>
           </div>
         </Box>
       </div>

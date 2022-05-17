@@ -7,7 +7,7 @@
 html,
 body {
   height: 100vh;
-	font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 #root {
@@ -21,29 +21,29 @@ body {
 }
 
 .flex-col {
-	display: flex;
+  display: flex;
   flex: 1 0 auto;
 }
 
 .sider-flex {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .sider-flex > * {
-	flex: 1 1 calc(50% - 2.5px);
+  flex: 1 1 calc(50% - 2.5px);
 }
 
 .sider-flex :nth-child(5),
 .sider-flex :nth-child(6) {
-	flex: 1 1 100%;
+  flex: 1 1 100%;
 }
 
 .sider-wrapper {
   background: rgb(59, 150, 255);
-	padding: 20px;
-	flex-basis: 25%;
+  padding: 20px;
+  flex-basis: 25%;
 }
 
 .page-wrapper {
@@ -84,4 +84,25 @@ body {
 
   color: white;
   background: rgb(0, 34, 77);
+}
+
+.login-wrapper {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  place-items: center;
+}
+
+.login-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-box {
+  display: flex;
+  flex-direction: column;
+	align-items: center;
+  padding: 20px;
 }

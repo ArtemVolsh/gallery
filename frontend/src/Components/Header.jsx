@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -15,6 +16,28 @@ const Header = () => {
             <Link to="/news">News</Link>
             <Link to="/gallery">Gallery</Link>
             <Link to="/about">About</Link>
+            <Button
+              variant="contained"
+              sx={{ background: "white", color: "black" }}
+            >
+              <Link
+                style={{ color: "black", textDecoration: "none" }}
+                to="/login"
+              >
+                Log In
+              </Link>
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ background: "white", color: "black" }}
+            >
+              <Link
+                style={{ color: "black", textDecoration: "none" }}
+                to="/registration"
+              >
+                Sign In
+              </Link>
+            </Button>
           </nav>
         </div>
       </header>

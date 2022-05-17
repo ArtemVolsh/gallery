@@ -22,12 +22,11 @@ const NewsPage = () => {
           url: "http://localhost:5000/api/news",
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
-        console.log(`In function ${response}`);
-        setNews(response.data.data);
-        console.log(response.data.data);
+        
+				setNews(response.data.data);
       } catch (e) {
         console.log(e);
-        console.log(e.response.data);
+        console.log(e?.response?.data);
       }
     };
 

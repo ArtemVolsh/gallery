@@ -19,7 +19,7 @@ class UserService {
     const userRole = await Role.findOne({ value: "USER" });
 
     console.log(`User role: ${userRole.value}`);
-		
+
     const user = await User.create({
       email,
       password: hashPassword,
