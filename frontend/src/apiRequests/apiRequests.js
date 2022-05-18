@@ -38,3 +38,29 @@ export const login = async ({ email, password }) => {
     console.log(e);
   }
 };
+
+export const createExhibition = async (exhibition) => {
+  try {
+    const response = await axios.post(`http://localhost:5000/api/exhibitions`, {
+      exhibition,
+    });
+
+    if (response.status == 200 || 201) {
+      console.log("Good!");
+      return {
+        success: true,
+        message: "Exhibition created!",
+      };
+    } else {
+      console.log("Bad!");
+      return {
+        success: false,
+        message: "Exhibition creation failed!",
+        responseMessage: response?.message,
+      };
+    }
+  } catch (e) {
+    console.log(JSON.stringify(e));
+    console.log(e.response.data);
+  }
+};

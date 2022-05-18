@@ -22,6 +22,16 @@ class ExhibitionsController {
       data: exhs,
     });
   };
+
+  createExhibition = async (req, res, next) => {
+    const { exhibition } = req.body;
+    const exhs = await Exhibitions.create(exhibition);
+
+    res.status(201).json({
+      success: true,
+      data: exhs,
+    });
+  };
 }
 
 module.exports = new ExhibitionsController();

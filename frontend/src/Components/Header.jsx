@@ -16,28 +16,46 @@ const Header = () => {
             <Link to="/news">News</Link>
             <Link to="/gallery">Gallery</Link>
             <Link to="/about">About</Link>
-            <Button
-              variant="contained"
-              sx={{ background: "white", color: "black" }}
-            >
-              <Link
-                style={{ color: "black", textDecoration: "none" }}
-                to="/login"
+            <div style={{ display: "inline-block" }}>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderRight: 0,
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                  borderColor: "white",
+                  "&:hover": {
+                    borderRight: 0,
+                  },
+                }}
               >
-                Log In
-              </Link>
-            </Button>
-            <Button
-              variant="contained"
-              sx={{ background: "white", color: "black" }}
-            >
-              <Link
-                style={{ color: "black", textDecoration: "none" }}
-                to="/registration"
+                <Link
+                  style={{
+                    color: "white",
+                    textDecoration: "none",
+                  }}
+                  to="/login"
+                >
+                  Log In
+                </Link>
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  background: "white",
+                  color: "black",
+                  borderTopLeftRadius: 0,
+                  borderBottomLeftRadius: 0,
+                }}
               >
-                Sign In
-              </Link>
-            </Button>
+                <Link
+                  style={{ color: "black", textDecoration: "none" }}
+                  to="/registration"
+                >
+                  Sign In
+                </Link>
+              </Button>
+            </div>
           </nav>
         </div>
       </header>

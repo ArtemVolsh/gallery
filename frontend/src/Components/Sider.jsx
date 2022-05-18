@@ -6,6 +6,8 @@ import {
   DateTimePicker as DatePicker,
 } from "@mui/x-date-pickers";
 
+import { createExhibition } from "../apiRequests/apiRequests";
+
 const Sider = () => {
   const noImageLink =
     "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.accofusion.com%2Fpublic%2Fupload_image%2Faccident_media%2F&psig=AOvVaw2LT-8lK07SyiM0tPCluLpN&ust=1652695539689000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKicreig4fcCFQAAAAAdAAAAABAD";
@@ -14,6 +16,7 @@ const Sider = () => {
     name: "",
     content: "",
     theme: "",
+    place: "",
     image: noImageLink,
     date: new Date(),
     endDate: new Date(),
@@ -24,18 +27,20 @@ const Sider = () => {
 
   const [exhibition, setExhibition] = useState(defaultExhibition);
 
-  const handleChangeInput = (prop) => (e) => {
-    setExhibition({ ...exhibition, [prop]: e.target.value });
-  };
-  const handleChangePickers = (prop) => (e) => {
-    setExhibition({ ...exhibition, [prop]: null });
+  // const handleChangeInput = (prop) => (e) => {
+  //   setExhibition({ ...exhibition, [prop]: e.target.value });
+  // };
+
+  const handleChangePickers = (key) => (value) => {
+    setExhibition({ ...exhibition, [key]: value });
   };
 
-  useEffect(() => {
-    return () => {
-      console.log(exhibition);
-    };
-  });
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setExhibition({ ...exhibition, [name]: value });
+  };
+
+  console.log(exhibition);
 
   return (
     <>
@@ -45,7 +50,7 @@ const Sider = () => {
             <TextField
               name="name"
               value={exhibition.name}
-              onChange={handleChangeInput("name")}
+              onChange={handleChangeInput}
               variant="filled"
               label="Name"
               placeholder="Provide name..."
@@ -54,7 +59,7 @@ const Sider = () => {
             <TextField
               name="place"
               value={exhibition.place}
-              onChange={handleChangeInput("place")}
+              onChange={handleChangeInput}
               variant="filled"
               label="Place"
               placeholder="Provide place..."
@@ -63,7 +68,7 @@ const Sider = () => {
             <TextField
               name="theme"
               value={exhibition.theme}
-              onChange={handleChangeInput("theme")}
+              onChange={handleChangeInput}
               variant="filled"
               label="Theme"
               placeholder="Provide theme..."
@@ -72,7 +77,7 @@ const Sider = () => {
             <TextField
               name="price"
               value={exhibition.price}
-              onChange={handleChangeInput("price")}
+              onChange={handleChangeInput}
               variant="filled"
               type="number"
               label="Price"
@@ -86,7 +91,7 @@ const Sider = () => {
             <TextField
               name="image"
               value={exhibition.image}
-              onChange={handleChangeInput("image")}
+              onChange={handleChangeInput}
               variant="filled"
               label="Thumbnail URL"
               sx={{ background: "white" }}
@@ -94,7 +99,7 @@ const Sider = () => {
             <TextField
               name="content"
               value={exhibition.content}
-              onChange={handleChangeInput("content")}
+              onChange={handleChangeInput}
               variant="filled"
               label="Content"
               multiline
@@ -107,7 +112,9 @@ const Sider = () => {
                 name="date"
                 label="Start Date"
                 value={exhibition.date}
-                onChange={handleChangePickers("date")}
+                onChange={(newValue) => {
+                  handleChangePickers("date")(newValue);
+                }}
                 renderInput={(params) => (
                   <TextField
                     sx={{ background: "white" }}
@@ -120,7 +127,9 @@ const Sider = () => {
                 name="endDate"
                 label="End Date"
                 value={exhibition.endDate}
-                onChange={handleChangePickers("endDate")}
+                onChange={(newValue) => {
+                  handleChangePickers("endDate")(newValue);
+                }}
                 renderInput={(params) => (
                   <TextField
                     sx={{ background: "white" }}
@@ -136,8 +145,8 @@ const Sider = () => {
                 color: "black",
                 ":hover": { backgroundColor: "gold" },
               }}
-
               variant="contained"
+              onClick={() => createExhibition(exhibition)}
             >
               Add Exhibition
             </Button>
