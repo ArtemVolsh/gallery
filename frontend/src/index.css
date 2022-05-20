@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +9,7 @@
 html,
 body {
   height: 100vh;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 #root {
@@ -103,6 +105,32 @@ body {
 .login-box {
   display: flex;
   flex-direction: column;
-	align-items: center;
+  align-items: center;
   padding: 20px;
+}
+
+.exhibition-card {
+  border-radius: 10px;
+  max-height: 400px;
+	overflow: hidden;
+}
+
+.exhibition-card__image-wrapper {
+  height: 150px;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.exhibition-card__image {
+  height: 150px;
+  width: 100%;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.exhibition-card__subheading {
+  display: inline-block;
+  color: gray;
+  font-weight: 500;
 }

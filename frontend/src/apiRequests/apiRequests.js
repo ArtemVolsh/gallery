@@ -1,4 +1,5 @@
 import axios from "axios";
+import { setAdmin, setUser } from "../Reducers/userReducer";
 
 export const registration = async ({ email, password, phoneNumber }) => {
   try {
@@ -25,18 +26,24 @@ export const registration = async ({ email, password, phoneNumber }) => {
 };
 
 export const login = async ({ email, password }) => {
-  try {
-    const response = await axios.post(`http://localhost:5000/api/login`, {
-      email,
-      password,
-    });
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`http://localhost:5000/api/login`, {
+        email,
+        password,
+      });
 
-    if (response.data.user.roles.includes("ADMIN")) {
-    } else if (response.data.user.roles.includes("USER")) {
+      console.log(`Login Req: ${response}`);
+
+      if (response.data.user.roles.includes("ADMIN")) {
+        dispatch(setAdmin(response.data.user));
+      } else {
+        dispatch(setUser(response.data.user));
+      }
+    } catch (e) {
+      console.log(e);
     }
-  } catch (e) {
-    console.log(e);
-  }
+  };
 };
 
 export const createExhibition = async (exhibition) => {
@@ -45,8 +52,7 @@ export const createExhibition = async (exhibition) => {
       exhibition,
     });
 
-    if (response.status == 200 || 201) {
-      console.log("Good!");
+    if (response.status(200) || response.status(201)) {
       return {
         success: true,
         message: "Exhibition created!",

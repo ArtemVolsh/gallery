@@ -21,5 +21,4 @@ export const store = createStore(
   persistedReducer,
   composeWithDevTools(applyMiddleware(thunk))
 );
-
-export const { Persistor } = persistStore(store);
+export const persistor = persistStore(store);

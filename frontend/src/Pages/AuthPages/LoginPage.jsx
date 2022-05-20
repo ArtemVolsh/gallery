@@ -8,6 +8,7 @@ import {
   Typography,
   FormControl,
 } from "@mui/material";
+import { useDispatch } from "react-redux";
 import { login } from "../../apiRequests/apiRequests";
 
 export const LoginPage = () => {
@@ -22,6 +23,7 @@ export const LoginPage = () => {
     setUserData({ ...userData, [prop]: e.target.value });
   };
 
+  const dispatch = useDispatch();
   const handleLogin = () => {};
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export const LoginPage = () => {
 
             <Button
               type="submit"
-              onClick={() => login(userData)}
+              onClick={() => dispatch(login(userData))}
               variant="contained"
               sx={{
                 "&:hover": {
