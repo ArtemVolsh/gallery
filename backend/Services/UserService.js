@@ -51,6 +51,7 @@ class UserService {
 
   login = async (email, password) => {
     const user = await User.findOne({ email });
+
     if (!user) {
       return {
         success: false,
@@ -65,7 +66,9 @@ class UserService {
       };
     }
     const userDto = new UserDTO(user);
+
     const tokens = TokenService.generateTokens({ ...userDto });
+    console.log("User service Login:" + userDto);
     return { ...tokens, user: userDto };
   };
 }

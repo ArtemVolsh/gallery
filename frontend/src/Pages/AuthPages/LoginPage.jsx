@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import {
-  TextField,
-  Box,
-  Button,
-  Paper,
-  Typography,
-  FormControl,
-} from "@mui/material";
+import { TextField, Box, Button, Paper, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { login } from "../../apiRequests/apiRequests";
 
@@ -19,17 +11,17 @@ export const LoginPage = () => {
 
   const [userData, setUserData] = useState(defaultUserData);
 
-  const handleChangeInput = (prop) => (e) => {
-    setUserData({ ...userData, [prop]: e.target.value });
+  const handleChangeInput = (e) => {
+    const { name, value } = e.target;
+    setUserData({ ...userData, [name]: value });
   };
 
   const dispatch = useDispatch();
-  const handleLogin = () => {};
+
+  console.log(userData);
 
   useEffect(() => {
-    return () => {
-      console.log(userData);
-    };
+    return () => {};
   });
 
   return (
@@ -46,7 +38,8 @@ export const LoginPage = () => {
               type="email"
               variant="filled"
               label="E-Mail"
-              onChange={handleChangeInput("email")}
+              value={userData.email}
+              onChange={handleChangeInput}
               sx={{ background: "white" }}
             ></TextField>
 
@@ -56,7 +49,8 @@ export const LoginPage = () => {
               type="password"
               variant="filled"
               label="Password"
-              onChange={handleChangeInput("password")}
+              value={userData.password}
+              onChange={handleChangeInput}
               sx={{ background: "white" }}
             ></TextField>
 

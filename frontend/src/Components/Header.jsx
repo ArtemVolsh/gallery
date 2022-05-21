@@ -31,7 +31,7 @@ const Header = () => {
                     background: "white",
                     color: "black",
                   }}
-                  onClick={() => dispatch(logout)}
+                  onClick={() => dispatch(logout())}
                 >
                   <Link
                     style={{ color: "black", textDecoration: "none" }}
