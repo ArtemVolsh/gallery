@@ -22,7 +22,7 @@ const ExcursionsPage = () => {
           url: "http://localhost:5000/api/excursions",
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         });
-				
+
         setExcursions(response.data.data);
       } catch (e) {
         console.log(e);

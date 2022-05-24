@@ -78,6 +78,12 @@ body {
   text-decoration: none;
 }
 
+.inline-flex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .footer-wrapper {
   display: flex;
   justify-content: center;
@@ -112,7 +118,7 @@ body {
 .exhibition-card {
   border-radius: 10px;
   max-height: 400px;
-	overflow: hidden;
+  overflow: hidden;
 }
 
 .exhibition-card__image-wrapper {
