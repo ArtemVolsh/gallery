@@ -40,7 +40,6 @@ export const login = ({ email, password }) => {
       } else {
         dispatch(setUser(response.data.user));
       }
-
     } catch (e) {
       console.log("Login Api Error" + e);
     }
@@ -68,7 +67,7 @@ export const createExhibition = async (exhibition) => {
     }
   } catch (e) {
     console.log(JSON.stringify(e));
-    console.log(e.response.data);
+    console.log(e?.response?.data);
   }
 };
 
@@ -93,6 +92,31 @@ export const createExcursion = async (excursion) => {
     }
   } catch (e) {
     console.log(JSON.stringify(e));
-    console.log(e.response.data);
+    console.log(e?.response?.data);
+  }
+};
+
+export const createNews = async (news) => {
+  try {
+    const response = await axios.post(`http://localhost:5000/api/news`, {
+      news,
+    });
+
+    if (response.status(200) || response.status(201)) {
+      return {
+        success: true,
+        message: "News item created!",
+      };
+    } else {
+      console.log("Bad!");
+      return {
+        success: false,
+        message: "News item creation failed!",
+        responseMessage: response?.message,
+      };
+    }
+  } catch (e) {
+    console.log(JSON.stringify(e));
+    console.log(e?.response?.data);
   }
 };

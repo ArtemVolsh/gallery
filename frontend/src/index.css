@@ -37,8 +37,7 @@ body {
   flex: 1 1 calc(50% - 2.5px);
 }
 
-.sider-flex :nth-child(5),
-.sider-flex :nth-child(6) {
+.sider-flex-full {
   flex: 1 1 100%;
 }
 
@@ -139,4 +138,10 @@ body {
   display: inline-block;
   color: gray;
   font-weight: 500;
+}
+
+.link-button {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }

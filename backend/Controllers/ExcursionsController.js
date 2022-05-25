@@ -22,6 +22,16 @@ class ExcursionsController {
       data: excs,
     });
   };
+
+  createExcursion = async (req, res, next) => {
+    const { excursion } = req.body;
+    const excs = await Excursions.create(excursion);
+
+    res.status(201).json({
+      success: true,
+      data: excs,
+    });
+  };
 }
 
 module.exports = new ExcursionsController();

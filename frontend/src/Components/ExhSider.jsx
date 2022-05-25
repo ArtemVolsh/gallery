@@ -5,7 +5,6 @@ import {
   LocalizationProvider,
   DateTimePicker as DatePicker,
 } from "@mui/x-date-pickers";
-import { useLocation } from "react-router-dom";
 import { createExhibition } from "../apiRequests/apiRequests";
 
 const ExhSider = () => {
@@ -103,6 +102,7 @@ const ExhSider = () => {
             multiline
             rows={4}
             placeholder="Describe the exhibition..."
+            className="sider-flex-full"
             sx={{ background: "white" }}
           ></TextField>
           <LocalizationProvider dateAdapter={AdapterDateFns}>

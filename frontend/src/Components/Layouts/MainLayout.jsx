@@ -3,6 +3,7 @@ import { Header } from "../Header";
 import { Footer } from "../Footer";
 import { ExhSider } from "../ExhSider";
 import { ExcSider } from "../ExcSider";
+import { NewsSider } from "../NewsSider";
 
 const MainLayout = () => {
   const location = useLocation();
@@ -19,7 +20,7 @@ const MainLayout = () => {
         return <ExcSider />;
 
       case NEWS:
-        return <ExhSider />;
+        return <NewsSider />;
 
       default:
         break;

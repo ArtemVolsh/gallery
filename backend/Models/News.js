@@ -27,6 +27,10 @@ const News = new Schema(
       type: String,
       required: true,
     },
+    theme: {
+      type: String,
+      required: true,
+    },
     publishedBy: {
       type: Schema.Types.ObjectId,
       ref: "User",

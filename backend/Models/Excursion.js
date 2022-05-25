@@ -1,5 +1,22 @@
 const { Schema, model } = require("mongoose");
 
+const Feedback = new Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const Excursion = new Schema(
   {
     name: {
@@ -36,7 +53,7 @@ const Excursion = new Schema(
       type: String,
       default: "https://www.jquery-az.com/html/images/banana.jpg",
     },
-    feedback: [{ type: String, ref: "Feedback" }],
+    feedback: [{ type: Feedback }],
   },
   {
     timestamps: true,

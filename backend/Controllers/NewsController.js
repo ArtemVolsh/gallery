@@ -14,7 +14,7 @@ class NewsController {
       /\b(gt|gte|lt|lte|in|regex)\b/g,
       (match) => `$${match}`
     );
-		
+
     const news = await News.find(JSON.parse(queryString));
 
     res.status(200).json({
@@ -23,8 +23,15 @@ class NewsController {
     });
   };
 
-	
+  createNews = async (req, res, next) => {
+    const { news } = req.body;
+    const newsItem = await News.create(news);
 
+    res.status(201).json({
+      success: true,
+      data: newsItem,
+    });
+  };
 }
 
 module.exports = new NewsController();

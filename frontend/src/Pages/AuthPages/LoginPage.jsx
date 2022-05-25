@@ -58,6 +58,7 @@ export const LoginPage = () => {
               type="submit"
               onClick={() => dispatch(login(userData))}
               variant="contained"
+              className="link-button"
               sx={{
                 "&:hover": {
                   backgroundColor: "#4bd876",

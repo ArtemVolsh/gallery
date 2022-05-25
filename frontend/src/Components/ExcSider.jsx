@@ -6,8 +6,11 @@ import {
   DateTimePicker as DatePicker,
 } from "@mui/x-date-pickers";
 import { createExcursion } from "../apiRequests/apiRequests";
+import { useSelector } from "react-redux";
 
 const ExcSider = () => {
+  const userId = useSelector((state) => state.user.currentUser.id);
+
   const noImageLink = "https://www.jquery-az.com/html/images/banana.jpg";
 
   const defaultExcursion = {
@@ -18,6 +21,8 @@ const ExcSider = () => {
     date: new Date(),
     price: 0,
     status: 0,
+    offeredBy: userId,
+    feedback: [],
   };
 
   const [excursion, setExcursion] = useState(defaultExcursion);
@@ -56,15 +61,6 @@ const ExcSider = () => {
             sx={{ background: "white" }}
           ></TextField>
           <TextField
-            name="theme"
-            value={excursion.theme}
-            onChange={handleChangeInput}
-            variant="filled"
-            label="Theme"
-            placeholder="Provide theme..."
-            sx={{ background: "white" }}
-          ></TextField>
-          <TextField
             name="price"
             value={excursion.price}
             onChange={handleChangeInput}
@@ -95,6 +91,7 @@ const ExcSider = () => {
             multiline
             rows={4}
             placeholder="Describe the excursion..."
+            className="sider-flex-full"
             sx={{ background: "white" }}
           ></TextField>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -115,13 +112,14 @@ const ExcSider = () => {
             />
           </LocalizationProvider>
           <Button
+            variant="contained"
+            onClick={() => createExcursion(excursion)}
+            className="sider-flex-full"
             sx={{
               backgroundColor: "white",
               color: "black",
               ":hover": { backgroundColor: "gold" },
             }}
-            variant="contained"
-            onClick={() => createExcursion(excursion)}
           >
             Add Excursion
           </Button>

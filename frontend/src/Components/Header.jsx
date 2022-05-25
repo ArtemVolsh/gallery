@@ -28,7 +28,7 @@ const Header = () => {
             {isAuth ? (
               <>
                 <div className="inline-flex">
-                  {/* <AccountCircleIcon /> */}
+                  <AccountCircleIcon />
                   <Typography
                     sx={{
                       display: "inline-block",

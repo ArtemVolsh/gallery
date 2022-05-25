@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import {
-  TextField,
-  Box,
-  Button,
-  Paper,
-  Typography,
-  FormControl,
-} from "@mui/material";
-import { registration, login } from "../../apiRequests/apiRequests";
+import { TextField, Box, Button, Paper, Typography } from "@mui/material";
+import { registration } from "../../apiRequests/apiRequests";
 
 export const RegisterPage = () => {
   const defaultUserData = {
@@ -22,8 +14,6 @@ export const RegisterPage = () => {
   const handleChangeInput = (prop) => (e) => {
     setUserData({ ...userData, [prop]: e.target.value });
   };
-
-  const handleRegister = () => {};
 
   useEffect(() => {
     return () => {
