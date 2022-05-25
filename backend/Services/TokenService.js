@@ -4,17 +4,14 @@ require("dotenv").config();
 
 class TokenService {
   generateTokens(payload) {
-    console.log(`TService Payload: ${JSON.stringify(payload)}`);
-
+    // console.log(`TService Payload: ${JSON.stringify(payload)}`);
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS, {
       expiresIn: "1d",
     });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH, {
       expiresIn: "30d",
     });
-
-    console.log(`TService Payload after signing: ${JSON.stringify(payload)}`);
-
+    // console.log(`TService Payload after signing: ${JSON.stringify(payload)}`);
     return {
       accessToken,
       refreshToken,

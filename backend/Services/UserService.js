@@ -36,8 +36,6 @@ class UserService {
     const userDTO = new UserDTO(user);
 
     const tokens = TokenService.generateTokens({ ...userDTO });
-    console.log(`UService tokens after signing ${JSON.stringify(tokens)}`);
-    console.log(`UService DTO ${JSON.stringify(userDTO)}`);
     await TokenService.saveToken(userDTO.id, tokens.refreshToken);
 
     return { ...tokens, user: userDTO };
@@ -68,7 +66,7 @@ class UserService {
     const userDto = new UserDTO(user);
 
     const tokens = TokenService.generateTokens({ ...userDto });
-    console.log("User service Login:" + userDto);
+    console.log("User service Login: " + JSON.stringify(userDto));
     return { ...tokens, user: userDto };
   };
 }
