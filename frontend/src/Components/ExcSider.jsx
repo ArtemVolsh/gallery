@@ -36,8 +36,6 @@ const ExcSider = () => {
     setExcursion({ ...excursion, [name]: value });
   };
 
-  console.log(excursion);
-
   return (
     <div className="sider-wrapper">
       <Box component="form">

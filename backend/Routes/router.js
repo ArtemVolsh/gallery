@@ -3,6 +3,7 @@ const NewsController = require("../Controllers/NewsController");
 const ExhibitionsController = require("../Controllers/ExhibitionsController");
 const AuthenticationController = require("../Controllers/AuthenticationController");
 const ExcursionsController = require("../Controllers/ExcursionsController");
+const authMiddleware = require("../middlewares/auth");
 const router = express.Router();
 
 router

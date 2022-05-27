@@ -69,6 +69,12 @@ class UserService {
     console.log("User service Login: " + JSON.stringify(userDto));
     return { ...tokens, user: userDto };
   };
+
+  logout = async (refreshToken) => {
+    const token = await TokenService.removeToken(refreshToken);
+
+    return token;
+  };
 }
 
 module.exports = new UserService();

@@ -25,10 +25,6 @@ const ExhSider = () => {
 
   const [exhibition, setExhibition] = useState(defaultExhibition);
 
-  // const handleChangeInput = (prop) => (e) => {
-  //   setExhibition({ ...exhibition, [prop]: e.target.value });
-  // };
-
   const handleChangePickers = (key) => (value) => {
     setExhibition({ ...exhibition, [key]: value });
   };
@@ -37,8 +33,6 @@ const ExhSider = () => {
     const { name, value } = e.target;
     setExhibition({ ...exhibition, [name]: value });
   };
-
-  console.log(exhibition);
 
   return (
     <div className="sider-wrapper">

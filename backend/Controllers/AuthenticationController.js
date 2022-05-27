@@ -42,6 +42,16 @@ class authenticationController {
       next(error);
     }
   };
+
+  logout = async (req, res, next) => {
+    try {
+      const { refreshToken } = req.cookies;
+      const token = await UserService.logout(refreshToken);
+      res.clearCookie("refreshToken");
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 module.exports = new authenticationController();

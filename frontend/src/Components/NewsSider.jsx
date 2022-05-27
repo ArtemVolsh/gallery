@@ -24,8 +24,6 @@ const NewsSider = () => {
     setNews({ ...news, [name]: value });
   };
 
-  console.log(news);
-
   return (
     <div className="sider-wrapper">
       <Box component="form">
