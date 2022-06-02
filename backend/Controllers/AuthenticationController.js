@@ -1,3 +1,4 @@
+const User = require("../Models/User");
 const UserService = require("../Services/UserService");
 
 class authenticationController {
@@ -50,6 +51,19 @@ class authenticationController {
       res.clearCookie("refreshToken");
     } catch (e) {
       next(e);
+    }
+  };
+
+  getUserById = async (req, res, next) => {
+    try {
+      const { id } = req.body;
+
+      const user = await UserService.getUserById(id);
+
+      return res.json(user);
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
   };
 }

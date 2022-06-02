@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Grid, Paper } from "@mui/material";
 import axios from "axios";
+import { getUserById } from "../apiRequests/utilities";
 
 const NewsPage = () => {
   const [filter, setFilter] = useState("");
@@ -50,17 +51,32 @@ const NewsPage = () => {
           <h1 style={{ marginBottom: "15px" }}>News Page</h1>
           <Grid container spacing={2}>
             {news.map((newsItem) => (
-              <Grid key={newsItem._id} item xs={4}>
-                <Paper sx={{ padding: "10px" }}>
-                  <span>{newsItem.name}</span>
-                  <p>{newsItem.content}</p>
-                  <p>
-                    {newsItem.feedback.map((feedbackItem) => (
-                      <>
-                        <div>{feedbackItem.content}</div>
-                      </>
-                    ))}
-                  </p>
+              <Grid key={`grid-${newsItem._id}`} item lg={3} md={4} xs={2}>
+                <Paper className="post-card">
+                  <div className="post-card__image-wrapper">
+                    <img
+                      className="post-card__image"
+                      src={newsItem.image}
+                      alt=""
+                    />
+                  </div>
+                  <div style={{ padding: "10px" }}>
+                    <h2 style={{ paddingBottom: "10px" }}>{newsItem.name}</h2>
+                    <span className="post-card__subheading">Theme</span>
+                    <span style={{ marginLeft: "5px" }}>{newsItem.theme}</span>
+                    <br />
+                    <span className="post-card__subheading">Published by</span>
+                    <span style={{ marginLeft: "5px" }}>{}</span>
+                    <br />
+                    <p>{newsItem.content}</p>
+                    <p>
+                      {newsItem.feedback.map((feedbackItem) => (
+                        <>
+                          <div>{feedbackItem.content}</div>
+                        </>
+                      ))}
+                    </p>
+                  </div>
                 </Paper>
               </Grid>
             ))}

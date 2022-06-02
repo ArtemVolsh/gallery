@@ -75,6 +75,20 @@ class UserService {
 
     return token;
   };
+
+  getUserById = async (id) => {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return {
+        success: false,
+        message: "Can't find the user",
+      };
+    }
+    const userDto = new UserDTO(user);
+
+    return { user: userDto };
+  };
 }
 
 module.exports = new UserService();

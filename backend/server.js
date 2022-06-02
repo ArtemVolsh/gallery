@@ -5,6 +5,7 @@ const Router = require("./Routes/router");
 const cors = require("./Middlewares/cors.js");
 const Port = process.env.PORT;
 const ConnectionString = process.env.DB_CONSTRING;
+const findUser = require("./Utils/Utils");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -40,3 +41,4 @@ const start = async () => {
 };
 
 start();
+findUser();

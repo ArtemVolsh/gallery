@@ -32,8 +32,7 @@ const News = new Schema(
       required: true,
     },
     publishedBy: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+      type: String,
       required: true,
     },
     image: {
