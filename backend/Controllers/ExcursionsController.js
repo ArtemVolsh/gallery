@@ -2,6 +2,8 @@ const Excursions = require("../Models/Excursion");
 
 class ExcursionsController {
   getAllExcursions = async (req, res, next) => {
+    let query;
+
     const reqQuery = { ...req.query };
 
     const removeFields = ["sort"];
@@ -15,7 +17,17 @@ class ExcursionsController {
       (match) => `$${match}`
     );
 
-    const excs = await Excursions.find(JSON.parse(queryString));
+    query = Excursions.find(JSON.parse(queryString));
+
+    if (req.query.sort) {
+      const sortByArr = req.query.sort.split(",");
+      const sortByStr = sortByArr.join("");
+      query = query.sort(sortByStr);
+    } else {
+      query = query.sort("name");
+    }
+
+    const excs = await query;
 
     res.status(200).json({
       success: true,

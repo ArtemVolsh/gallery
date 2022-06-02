@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setAdmin, setUser } from "../Reducers/userReducer";
+const { log } = console;
 
 export const registration = async ({ email, password, phoneNumber }) => {
   try {
@@ -20,8 +21,8 @@ export const registration = async ({ email, password, phoneNumber }) => {
     }
     return message;
   } catch (e) {
-    console.log(e);
-    console.log(e.response?.data?.message);
+    log(e);
+    log(e.response?.data?.message);
   }
 };
 
@@ -33,7 +34,7 @@ export const login = ({ email, password }) => {
         password,
       });
 
-      console.log(`Login Req: ${response}`);
+      log(`Login Req: ${response}`);
 
       if (response.data.user.role.includes("ADMIN")) {
         dispatch(setAdmin(response.data.user));
@@ -41,82 +42,106 @@ export const login = ({ email, password }) => {
         dispatch(setUser(response.data.user));
       }
     } catch (e) {
-      console.log("Login Api Error" + e);
+      log("Login Api Error" + e);
     }
   };
 };
 
 export const createExhibition = async (exhibition) => {
   try {
-    const response = await axios.post(`http://localhost:5000/api/exhibitions`, {
-      exhibition,
-    });
+    axios
+      .post(`http://localhost:5000/api/exhibitions`, {
+        exhibition,
+      })
+      .then((response) => {
+        log("Exh Create Log");
+        log(response);
+        const controllerResponse = {
+          ...response,
+          controllerSuccess: true,
+          controllerMessage: "Exhibition created!",
+        };
+        log("Exh Create Log 2");
+        log(controllerResponse);
 
-    if (response.status(200) || response.status(201)) {
-      return {
-        success: true,
-        message: "Exhibition created!",
-      };
-    } else {
-      console.log("Bad!");
-      return {
-        success: false,
-        message: "Exhibition creation failed!",
-        responseMessage: response?.message,
-      };
-    }
+        return controllerResponse;
+      })
+      .catch((e) => {
+        const controllerError = {
+          ...e,
+          controllerSuccess: false,
+          controllerMessage: "Exhibition creation failed!",
+        };
+        return controllerError;
+      });
   } catch (e) {
-    console.log(JSON.stringify(e));
-    console.log(e?.response?.data);
+    log(JSON.stringify(e));
+    log(e?.response?.data);
   }
 };
 
 export const createExcursion = async (excursion) => {
   try {
-    const response = await axios.post(`http://localhost:5000/api/excursions`, {
-      excursion,
-    });
+    axios
+      .post(`http://localhost:5000/api/excursions`, {
+        excursion,
+      })
+      .then((response) => {
+        log("Exc Create Log");
+        log(response);
+        const controllerResponse = {
+          ...response,
+          controllerSuccess: true,
+          controllerMessage: "Excursion created!",
+        };
+        log("Exc Create Log 2");
+        log(controllerResponse);
 
-    if (response.status(200) || response.status(201)) {
-      return {
-        success: true,
-        message: "Excursion created!",
-      };
-    } else {
-      console.log("Bad!");
-      return {
-        success: false,
-        message: "Excursion creation failed!",
-        responseMessage: response?.message,
-      };
-    }
+        return controllerResponse;
+      })
+      .catch((e) => {
+        const controllerError = {
+          ...e,
+          controllerSuccess: false,
+          controllerMessage: "Excursion creation failed!",
+        };
+        return controllerError;
+      });
   } catch (e) {
-    console.log(JSON.stringify(e));
-    console.log(e?.response?.data);
+    log(JSON.stringify(e));
+    log(e?.response?.data);
   }
 };
 
 export const createNews = async (news) => {
   try {
-    const response = await axios.post(`http://localhost:5000/api/news`, {
-      news,
-    });
+    axios
+      .post(`http://localhost:5000/api/news`, {
+        news,
+      })
+      .then((response) => {
+        log("News Create Log");
+        log(response);
+        const controllerResponse = {
+          ...response,
+          controllerSuccess: true,
+          controllerMessage: "News created!",
+        };
+        log("News Create Log 2");
+        log(controllerResponse);
 
-    if (response.status(200) || response.status(201)) {
-      return {
-        success: true,
-        message: "News item created!",
-      };
-    } else {
-      console.log("Bad!");
-      return {
-        success: false,
-        message: "News item creation failed!",
-        responseMessage: response?.message,
-      };
-    }
+        return controllerResponse;
+      })
+      .catch((e) => {
+        const controllerError = {
+          ...e,
+          controllerSuccess: false,
+          controllerMessage: "News creation failed!",
+        };
+        return controllerError;
+      });
   } catch (e) {
-    console.log(JSON.stringify(e));
-    console.log(e?.response?.data);
+    log(JSON.stringify(e));
+    log(e?.response?.data);
   }
 };

@@ -119,27 +119,27 @@ body {
   padding: 20px;
 }
 
-.exhibition-card {
+.post-card {
   border-radius: 10px;
   max-height: 400px;
   overflow: hidden;
 }
 
-.exhibition-card__image-wrapper {
+.post-card__image-wrapper {
   height: 150px;
   width: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
-.exhibition-card__image {
+.post-card__image {
   height: 150px;
   width: 100%;
   object-fit: cover;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.exhibition-card__subheading {
+.post-card__subheading {
   display: inline-block;
   color: gray;
   font-weight: 500;

@@ -17,13 +17,13 @@ const NewsPage = () => {
         if (params && !filter) query = params;
         else query = filter;
 
-        const response = await axios({
+        axios({
           method: "GET",
           url: "http://localhost:5000/api/news",
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
-        });
-        
-				setNews(response.data.data);
+        })
+          .then((response) => setNews(response.data.data))
+          .catch((e) => console.log(e));
       } catch (e) {
         console.log(e);
         console.log(e?.response?.data);

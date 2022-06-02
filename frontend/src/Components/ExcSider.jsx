@@ -7,10 +7,10 @@ import {
   Switch,
   Stack,
   Typography,
-  Autocomplete,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import ClearIcon from "@mui/icons-material/Clear";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import {
   LocalizationProvider,
@@ -18,12 +18,20 @@ import {
 } from "@mui/x-date-pickers";
 
 import { createExcursion } from "../apiRequests/apiRequests";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setExcursions as setExcursionsGlobal,
+  setLoading as setLoadingGlobal,
+} from "../Reducers/postReducer";
 
 const ExcSider = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
   const userId = useSelector((state) => state.user.currentUser.id);
+  const excursionsGlobal = useSelector((state) => state.posts.excursions);
 
+  const dispatch = useDispatch();
+
+  const [searchString, setSearchString] = useState("");
   const [isSearch, setSearch] = useState(false);
 
   const noImageLink = "https://www.jquery-az.com/html/images/banana.jpg";
@@ -35,16 +43,15 @@ const ExcSider = () => {
     image: noImageLink,
     date: new Date(),
     price: 0,
-    status: 0,
     offeredBy: userId,
     feedback: [],
   };
 
+  const [excursion, setExcursion] = useState(defaultExcursion);
+
   const handleChangeSearch = (e) => {
     setSearch(e.target.checked);
   };
-
-  const [excursion, setExcursion] = useState(defaultExcursion);
 
   const handleChangePickers = (key) => (value) => {
     setExcursion({ ...excursion, [key]: value });
@@ -53,6 +60,19 @@ const ExcSider = () => {
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setExcursion({ ...excursion, [name]: value });
+  };
+
+  const handleSearchString = (e) => {
+    setSearchString(e.target.value);
+  };
+  console.log(searchString);
+
+  const filterExcursions = () => {
+    dispatch(
+      setExcursionsGlobal(
+        excursionsGlobal.filter((excs) => excs.name === searchString)
+      )
+    );
   };
 
   function renderSider() {
@@ -164,21 +184,49 @@ const ExcSider = () => {
               </div>
             </Box>
           ) : (
-            <Autocomplete
-              freeSolo
-              id="free-solo-2-demo"
-              disableClearable
-              renderInput={(params) => (
+            <Box component="form">
+              <div className="sider-flex">
                 <TextField
-                  {...params}
-                  label="Search input"
+                  value={searchString}
+                  variant="filled"
+                  label="Excursion name"
+                  placeholder="Enter name..."
+                  className="sider-flex-full"
+                  onChange={handleSearchString}
+                  sx={{ background: "white" }}
                   InputProps={{
-                    ...params.InputProps,
-                    type: "search",
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          setSearchString("");
+                          dispatch(setLoadingGlobal(true));
+                        }}
+                      >
+                        <ClearIcon />
+                      </Button>
+                    ),
                   }}
-                />
-              )}
-            />
+                ></TextField>
+                <Button
+                  variant="contained"
+                  onClick={filterExcursions}
+                  className="sider-flex-full"
+                  sx={{
+                    backgroundColor: "white",
+                    color: "black",
+                    ":hover": { backgroundColor: "gold" },
+                  }}
+                >
+                  Search
+                </Button>
+              </div>
+            </Box>
           )}
         </div>
       );
