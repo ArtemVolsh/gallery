@@ -79,7 +79,7 @@ const ExhibitionsPage = () => {
           <h1 style={{ marginBottom: "15px" }}>Exhibitions Page</h1>
           <Grid container spacing={2}>
             {exhibitionsGlobal.map((exhs) => (
-              <Grid key={`grid-${exhs._id}`} item xs={5}>
+              <Grid key={`grid-${exhs._id}`} item lg={3} md={4} xs={2}>
                 <Paper className="post-card">
                   <div className="post-card__image-wrapper">
                     <img className="post-card__image" src={exhs.image} alt="" />

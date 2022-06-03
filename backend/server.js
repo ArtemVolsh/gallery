@@ -41,4 +41,3 @@ const start = async () => {
 };
 
 start();
-findUser();

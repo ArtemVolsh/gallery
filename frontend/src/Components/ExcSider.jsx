@@ -18,6 +18,7 @@ import {
 } from "@mui/x-date-pickers";
 
 import { createExcursion } from "../apiRequests/apiRequests";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   setExcursions as setExcursionsGlobal,
@@ -65,7 +66,6 @@ const ExcSider = () => {
   const handleSearchString = (e) => {
     setSearchString(e.target.value);
   };
-  console.log(searchString);
 
   const filterExcursions = () => {
     dispatch(
