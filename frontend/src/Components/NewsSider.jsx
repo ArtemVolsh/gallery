@@ -48,8 +48,6 @@ const NewsSider = () => {
     setSearch(e.target.checked);
   };
 
-  console.log(searchString);
-
   const handleSearchString = (e) => {
     setSearchString(e.target.value);
   };
