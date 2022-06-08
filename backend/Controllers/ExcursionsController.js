@@ -17,7 +17,16 @@ class ExcursionsController {
       (match) => `$${match}`
     );
 
-    query = Excursions.find(JSON.parse(queryString));
+    let parsedString = JSON.parse(queryString);
+
+    query = Excursions.find(parsedString);
+
+    for (let [key, value] of Object.entries(parsedString)) {
+      if (key == "options") {
+        parsedString.name = { ...parsedString.name, $options: "i" };
+        delete parsedString.options;
+      }
+    }
 
     if (req.query.sort) {
       const sortByArr = req.query.sort.split(",");

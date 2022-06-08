@@ -56,7 +56,10 @@ export const LoginPage = () => {
 
             <Button
               type="submit"
-              onClick={() => dispatch(login(userData))}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(login(userData));
+              }}
               variant="contained"
               className="link-button"
               sx={{

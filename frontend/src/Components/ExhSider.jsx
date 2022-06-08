@@ -20,14 +20,9 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { createExhibition } from "../apiRequests/apiRequests";
-import {
-  setExhibitions as setExhibitionsGlobal,
-  setLoading as setLoadingGlobal,
-} from "../Reducers/postReducer";
 
 const ExhSider = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
-  const exhibitionsGlobal = useSelector((state) => state.posts.exhibitions);
 
   const dispatch = useDispatch();
 
@@ -66,14 +61,6 @@ const ExhSider = () => {
 
   const handleSearchString = (e) => {
     setSearchString(e.target.value);
-  };
-
-  const filterExcursions = () => {
-    dispatch(
-      setExhibitionsGlobal(
-        exhibitionsGlobal.filter((exhb) => exhb.name === searchString)
-      )
-    );
   };
 
   function renderSider() {
@@ -229,7 +216,6 @@ const ExhSider = () => {
                         variant="contained"
                         onClick={() => {
                           setSearchString("");
-                          dispatch(setLoadingGlobal(true));
                         }}
                       >
                         <ClearIcon />
@@ -239,7 +225,7 @@ const ExhSider = () => {
                 ></TextField>
                 <Button
                   variant="contained"
-                  onClick={filterExcursions}
+                  onClick={() => {}}
                   className="sider-flex-full"
                   sx={{
                     backgroundColor: "white",

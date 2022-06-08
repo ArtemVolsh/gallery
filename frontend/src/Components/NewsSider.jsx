@@ -16,15 +16,11 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 import { createNews } from "../apiRequests/apiRequests";
 
-import {
-  setNews as setNewsGlobal,
-  setLoading as setLoadingGlobal,
-} from "../Reducers/postReducer";
-
 const NewsSider = () => {
   const userId = useSelector((state) => state.user.currentUser.id);
   const isAuth = useSelector((state) => state.user.isAuth);
-  const newsGlobal = useSelector((state) => state.posts.news);
+  console.log("userId");
+  console.log(userId);
 
   const dispatch = useDispatch();
 
@@ -55,14 +51,6 @@ const NewsSider = () => {
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setNews({ ...news, [name]: value });
-  };
-
-  const filterExcursions = () => {
-    dispatch(
-      setNewsGlobal(
-        newsGlobal.filter((newsItem) => newsItem.name === searchString)
-      )
-    );
   };
 
   function renderSider() {
@@ -164,7 +152,6 @@ const NewsSider = () => {
                         variant="contained"
                         onClick={() => {
                           setSearchString("");
-                          dispatch(setLoadingGlobal(true));
                         }}
                       >
                         <ClearIcon />
@@ -174,7 +161,7 @@ const NewsSider = () => {
                 ></TextField>
                 <Button
                   variant="contained"
-                  onClick={filterExcursions}
+                  onClick={() => {}}
                   className="sider-flex-full"
                   sx={{
                     backgroundColor: "white",

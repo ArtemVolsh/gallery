@@ -2,21 +2,16 @@ import { useEffect, useState } from "react";
 import { Container, Grid, Paper } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setExcursions as setExcursionsGlobal,
-  setLoading as setLoadingGlobal,
-} from "../Reducers/postReducer";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ExcursionsPage = () => {
   const [filter, setFilter] = useState("");
   const [excursions, setExcursions] = useState([]);
 
-  const params = window.location.search ? window.location.search : null;
-  const [forceRender, setForceRender] = useState(false);
-
+  const location = useLocation();
+  const params = location.search ? location.search : null;
   const dispatch = useDispatch();
-  const excursionsGlobal = useSelector((state) => state.posts.excursions);
-  const loading = useSelector((state) => state.posts.loading);
+  const navigate = useNavigate();
 
   const timeLocalOptions = {
     weekday: "short",
@@ -28,16 +23,10 @@ const ExcursionsPage = () => {
     second: undefined,
   };
 
-  // Not a bug, feature to force render from another component
-  useEffect(() => {
-    if (loading) setForceRender(!forceRender);
-  }, [loading]);
-
   useEffect(() => {
     let cancel;
 
     const fetchData = async () => {
-      dispatch(setLoadingGlobal(true));
       try {
         let query;
 
@@ -46,14 +35,12 @@ const ExcursionsPage = () => {
 
         axios({
           method: "GET",
-          url: "http://localhost:5000/api/excursions",
+          url: `http://localhost:5000/api/excursions${query}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         })
-          .then((response) => {
-            setExcursions(response.data.data);
-            dispatch(setExcursionsGlobal(response.data.data));
+          .then(({ data }) => {
+            setExcursions(data.data);
           })
-          .then(() => dispatch(setLoadingGlobal(false)))
           .catch((e) => console.log(e));
       } catch (e) {
         console.log(e);
@@ -64,7 +51,7 @@ const ExcursionsPage = () => {
     fetchData();
 
     return () => cancel();
-  }, [filter, params, forceRender]);
+  }, [filter, params]);
 
   return (
     <>
@@ -80,7 +67,7 @@ const ExcursionsPage = () => {
         >
           <h1 style={{ marginBottom: "15px" }}>Excursions Page</h1>
           <Grid container spacing={2}>
-            {excursionsGlobal?.map((excs) => (
+            {excursions?.map((excs) => (
               <Grid key={`grid-${excs._id}`} item lg={3} md={4} xs={2}>
                 <Paper className="post-card">
                   <div className="post-card__image-wrapper">

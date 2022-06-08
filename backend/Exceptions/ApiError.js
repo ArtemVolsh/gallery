@@ -8,8 +8,8 @@ class ApiError extends Error {
     this.errors = errors;
   }
 
-  static UnauthorizedError() {
-    return new ApiError(401, "Unauthorized User");
+  static UnauthorizedError(status = 401, error = "Unauthorized User") {
+    return new ApiError(status, error);
   }
 
   static BadRequest(message, errors = []) {

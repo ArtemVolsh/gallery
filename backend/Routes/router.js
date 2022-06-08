@@ -8,7 +8,7 @@ const router = express.Router();
 
 router
   .route("/news")
-  .get(NewsController.getAllNews)
+  .get(authMiddleware, NewsController.getAllNews)
   .post(NewsController.createNews);
 router
   .route("/exhibitions")

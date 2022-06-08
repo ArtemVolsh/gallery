@@ -3,10 +3,8 @@ import { Container, Grid, Paper } from "@mui/material";
 import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setNews as setNewsGlobal,
-  setLoading as setLoadingGlobal,
-} from "../Reducers/postReducer";
+
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { getUserById } from "../apiRequests/utilities";
 
@@ -14,22 +12,15 @@ const NewsPage = () => {
   const [filter, setFilter] = useState("");
   const [news, setNews] = useState([]);
 
-  const params = window.location.search ? window.location.search : null;
-  const [forceRender, setForceRender] = useState(false);
-
+  const location = useLocation();
+  const params = location.search ? location.search : null;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const newsGlobal = useSelector((state) => state.posts.news);
-  const loading = useSelector((state) => state.posts.loading);
-
-  useEffect(() => {
-    if (loading) setForceRender(!forceRender);
-  }, [loading]);
 
   useEffect(() => {
     let cancel;
 
     const fetchData = async () => {
-      dispatch(setLoadingGlobal(true));
       try {
         let query;
 
@@ -41,11 +32,9 @@ const NewsPage = () => {
           url: "http://localhost:5000/api/news",
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         })
-          .then((response) => {
-            setNews(response.data.data);
-            dispatch(setNewsGlobal(response.data.data));
+          .then(({ data }) => {
+            setNews(data.data);
           })
-          .then(() => dispatch(setLoadingGlobal(false)))
           .catch((e) => console.log(e));
       } catch (e) {
         console.log(e);
@@ -56,7 +45,7 @@ const NewsPage = () => {
     fetchData();
 
     return () => cancel();
-  }, [filter, params, forceRender]);
+  }, [filter, params]);
 
   return (
     <>
@@ -72,7 +61,7 @@ const NewsPage = () => {
         >
           <h1 style={{ marginBottom: "15px" }}>News Page</h1>
           <Grid container spacing={2}>
-            {newsGlobal.map((newsItem) => (
+            {news.map((newsItem) => (
               <Grid key={`grid-${newsItem._id}`} item lg={3} md={4} xs={2}>
                 <Paper className="post-card">
                   <div className="post-card__image-wrapper">

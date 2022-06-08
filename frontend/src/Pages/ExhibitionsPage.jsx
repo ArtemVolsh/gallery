@@ -2,21 +2,17 @@ import { useEffect, useState } from "react";
 import { Container, Grid, Paper } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setExhibitions as setExhibitionsGlobal,
-  setLoading as setLoadingGlobal,
-} from "../Reducers/postReducer";
+
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ExhibitionsPage = () => {
   const [filter, setFilter] = useState("");
   const [exhibitions, setExhibitions] = useState([]);
 
-  const params = window.location.search ? window.location.search : null;
-  const [forceRender, setForceRender] = useState(false);
-
+  const location = useLocation();
+  const params = location.search ? location.search : null;
   const dispatch = useDispatch();
-  const exhibitionsGlobal = useSelector((state) => state.posts.exhibitions);
-  const loading = useSelector((state) => state.posts.loading);
+  const navigate = useNavigate();
 
   const timeLocalOptions = {
     weekday: "short",
@@ -27,10 +23,6 @@ const ExhibitionsPage = () => {
     minute: "numeric",
     second: undefined,
   };
-
-  useEffect(() => {
-    if (loading) setForceRender(!forceRender);
-  }, [loading]);
 
   useEffect(() => {
     let cancel;
@@ -49,9 +41,7 @@ const ExhibitionsPage = () => {
         })
           .then((response) => {
             setExhibitions(response.data.data);
-            dispatch(setExhibitionsGlobal(response.data.data));
           })
-          .then(() => dispatch(setLoadingGlobal(false)))
           .catch((e) => console.log(e));
       } catch (e) {
         console.log(e);
@@ -62,7 +52,7 @@ const ExhibitionsPage = () => {
     fetchData();
 
     return () => cancel();
-  }, [filter, params, forceRender]);
+  }, [filter, params]);
 
   return (
     <>
@@ -78,7 +68,7 @@ const ExhibitionsPage = () => {
         >
           <h1 style={{ marginBottom: "15px" }}>Exhibitions Page</h1>
           <Grid container spacing={2}>
-            {exhibitionsGlobal.map((exhs) => (
+            {exhibitions.map((exhs) => (
               <Grid key={`grid-${exhs._id}`} item lg={3} md={4} xs={2}>
                 <Paper className="post-card">
                   <div className="post-card__image-wrapper">

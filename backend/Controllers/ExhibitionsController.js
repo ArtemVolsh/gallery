@@ -11,11 +11,20 @@ class ExhibitionsController {
     let queryString = JSON.stringify(reqQuery);
 
     queryString = queryString.replace(
-      /\b(gt|gte|lt|lte|in|regex)\b/g,
+      /\b(gt|gte|lt|lte|in|regex|options)\b/g,
       (match) => `$${match}`
     );
 
-    const exhs = await Exhibitions.find(JSON.parse(queryString));
+    let parsedString = JSON.parse(queryString);
+
+    for (let [key, value] of Object.entries(parsedString)) {
+      if (key == "options") {
+        parsedString.name = { ...parsedString.name, $options: "i" };
+        delete parsedString.options;
+      }
+    }
+
+    const exhs = await Exhibitions.find(parsedString);
 
     res.status(200).json({
       success: true,

@@ -60,7 +60,10 @@ export const RegisterPage = () => {
 
             <Button
               type="submit"
-              onClick={() => registration(userData)}
+              onClick={(e) => {
+                e.preventDefault();
+                registration(userData);
+              }}
               variant="contained"
               sx={{
                 "&:hover": {

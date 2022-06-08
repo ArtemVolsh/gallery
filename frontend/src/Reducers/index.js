@@ -5,11 +5,9 @@ import userReducer from "./userReducer";
 
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import postReducer from "./postReducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
-  posts: postReducer,
 });
 
 const persistConfig = {

@@ -20,15 +20,10 @@ import {
 import { createExcursion } from "../apiRequests/apiRequests";
 
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setExcursions as setExcursionsGlobal,
-  setLoading as setLoadingGlobal,
-} from "../Reducers/postReducer";
 
 const ExcSider = () => {
   const isAuth = useSelector((state) => state.user.isAuth);
   const userId = useSelector((state) => state.user.currentUser.id);
-  const excursionsGlobal = useSelector((state) => state.posts.excursions);
 
   const dispatch = useDispatch();
 
@@ -48,7 +43,19 @@ const ExcSider = () => {
     feedback: [],
   };
 
+  const defaultSearchExcursion = {
+    name: "",
+    content: "",
+    place: "",
+    date: new Date(),
+    price: 0,
+  };
+
+  const [priceSearchType, setPriceSearchType] = useState();
   const [excursion, setExcursion] = useState(defaultExcursion);
+  const [searchExcursion, setSearchExcursion] = useState(
+    defaultSearchExcursion
+  );
 
   const handleChangeSearch = (e) => {
     setSearch(e.target.checked);
@@ -63,16 +70,29 @@ const ExcSider = () => {
     setExcursion({ ...excursion, [name]: value });
   };
 
-  const handleSearchString = (e) => {
-    setSearchString(e.target.value);
+  const formNavigationString = (post) => {
+    let navString = "";
+
+    for (let [key, value] of Object.entries(post)) {
+      let firstOrConsequent = navString.includes("?") ? "&&" : "?";
+
+      let customKeys = ["price", "name"];
+
+      if (key === "price" && value !== defaultSearchExcursion[`${key}`])
+        navString += `${firstOrConsequent}${key}[${priceSearchType.type}]=${value}`;
+
+      if (key === "name" && value !== defaultSearchExcursion[`${key}`])
+        navString += `${firstOrConsequent}${key}[regex]=${value}&&[options]=i`;
+
+      if (value !== defaultSearchExcursion[key] && !customKeys.includes(key))
+        navString += `${firstOrConsequent}${key}[regex]=${value}`;
+    }
+
+    return navString;
   };
 
-  const filterExcursions = () => {
-    dispatch(
-      setExcursionsGlobal(
-        excursionsGlobal.filter((excs) => excs.name === searchString)
-      )
-    );
+  const handleSearchString = (e) => {
+    setSearchString(e.target.value);
   };
 
   function renderSider() {
@@ -205,7 +225,6 @@ const ExcSider = () => {
                         variant="contained"
                         onClick={() => {
                           setSearchString("");
-                          dispatch(setLoadingGlobal(true));
                         }}
                       >
                         <ClearIcon />
@@ -215,7 +234,7 @@ const ExcSider = () => {
                 ></TextField>
                 <Button
                   variant="contained"
-                  onClick={filterExcursions}
+                  onClick={() => {}}
                   className="sider-flex-full"
                   sx={{
                     backgroundColor: "white",
