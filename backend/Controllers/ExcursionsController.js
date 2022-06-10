@@ -13,30 +13,27 @@ class ExcursionsController {
     let queryString = JSON.stringify(reqQuery);
 
     queryString = queryString.replace(
-      /\b(gt|gte|lt|lte|in|regex)\b/g,
+      /\b(gt|gte|lt|lte|in|regex|eq)\b/g,
       (match) => `$${match}`
     );
 
     let parsedString = JSON.parse(queryString);
 
-    query = Excursions.find(parsedString);
-
     for (let [key, value] of Object.entries(parsedString)) {
-      if (key == "options") {
-        parsedString.name = { ...parsedString.name, $options: "i" };
-        delete parsedString.options;
+      if (parsedString[key].hasOwnProperty("$regex")) {
+        parsedString[key] = { ...parsedString[key], $options: "i" };
       }
     }
 
-    if (req.query.sort) {
-      const sortByArr = req.query.sort.split(",");
-      const sortByStr = sortByArr.join("");
-      query = query.sort(sortByStr);
-    } else {
-      query = query.sort("name");
-    }
+    // if (req.query.sort) {
+    //   const sortByArr = req.query.sort.split(",");
+    //   const sortByStr = sortByArr.join("");
+    //   query = query.sort(sortByStr);
+    // } else {
+    //   query = query.sort("name");
+    // }
 
-    const excs = await query;
+    const excs = await Excursions.find(parsedString);
 
     res.status(200).json({
       success: true,

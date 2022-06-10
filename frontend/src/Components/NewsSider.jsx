@@ -1,57 +1,115 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   Box,
-  Button,
   InputAdornment,
+  Button,
   Switch,
   Stack,
   Typography,
+  Checkbox,
+  FormLabel,
 } from "@mui/material";
-
-import { useSelector, useDispatch } from "react-redux";
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import ClearIcon from "@mui/icons-material/Clear";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import {
+  LocalizationProvider,
+  DateTimePicker as DatePicker,
+} from "@mui/x-date-pickers";
 
 import { createNews } from "../apiRequests/apiRequests";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 const NewsSider = () => {
-  const userId = useSelector((state) => state.user.currentUser.id);
   const isAuth = useSelector((state) => state.user.isAuth);
-  console.log("userId");
-  console.log(userId);
+  const userId = useSelector((state) => state.user.currentUser.id);
 
   const dispatch = useDispatch();
-
-  const [searchString, setSearchString] = useState("");
-  const [isSearch, setSearch] = useState(false);
+  const navigate = useNavigate();
 
   const noImageLink = "https://www.jquery-az.com/html/images/banana.jpg";
 
   const defaultNews = {
     name: "",
     content: "",
-    theme: "",
+    place: "",
     image: noImageLink,
-    publishedBy: userId,
+    date: new Date(),
+    price: 0,
     feedback: [],
   };
 
+  console.log("defaultNews");
+  console.log(defaultNews);
+
+  const defaultSearchNews = {
+    name: "",
+    content: "",
+    place: "",
+  };
+
+  // TODO Add fix published by
+
+  const [isSearch, setSearch] = useState(false);
+
   const [news, setNews] = useState(defaultNews);
+  const [searchNews, setSearchNews] = useState(defaultSearchNews);
+
+  console.log("news");
+  console.log(news);
 
   const handleChangeSearch = (e) => {
     setSearch(e.target.checked);
-  };
-
-  const handleSearchString = (e) => {
-    setSearchString(e.target.value);
   };
 
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setNews({ ...news, [name]: value });
   };
+
+  const handleSearchInput = (e) => {
+    const { name, value } = e.target;
+    setSearchNews({ ...searchNews, [name]: value });
+  };
+  const handleSearchStatus = (e) => {
+    setSearchNews({ ...searchNews, status: e.target.checked });
+  };
+
+  const formNavigationString = (post) => {
+    let navString = "";
+
+    for (let [key, value] of Object.entries(post)) {
+      let firstOrConsequent = navString.includes("?") ? "&&" : "?";
+
+      let customKeys = ["price", "status"];
+
+      if (key === "price" && value !== defaultSearchNews[`${key}`])
+        navString += `${firstOrConsequent}${key}[lte]=${value}`;
+
+      if (key === "status")
+        navString += `${firstOrConsequent}${key}[eq]=${value ? 1 : 0}`;
+
+      if (value !== defaultSearchNews[key] && !customKeys.includes(key))
+        navString += `${firstOrConsequent}${key}[regex]=${value}`;
+    }
+
+    console.log(navString);
+
+    return navString;
+  };
+
+  const filter = (post) => {
+    const string = formNavigationString(post);
+    navigate("/news" + string);
+    return string;
+  };
+
+  useEffect(() => {
+    console.log(formNavigationString(searchNews));
+  }, [searchNews]);
 
   function renderSider() {
     if (isAuth) {
@@ -134,43 +192,56 @@ const NewsSider = () => {
             <Box component="form">
               <div className="sider-flex">
                 <TextField
-                  value={searchString}
+                  name="name"
+                  value={searchNews.name}
+                  onInput={handleSearchInput}
                   variant="filled"
-                  label="Excursion name"
-                  placeholder="Enter name..."
+                  label="News name"
+                  placeholder="Enter news name..."
                   className="sider-flex-full"
-                  onChange={handleSearchString}
                   sx={{ background: "white" }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          setSearchString("");
-                        }}
-                      >
-                        <ClearIcon />
-                      </Button>
-                    ),
-                  }}
                 ></TextField>
-                <Button
-                  variant="contained"
-                  onClick={() => {}}
+                <TextField
+                  name="content"
+                  value={searchNews.content}
+                  onInput={handleSearchInput}
+                  variant="filled"
+                  label="News content"
+                  placeholder="Enter news content..."
                   className="sider-flex-full"
-                  sx={{
-                    backgroundColor: "white",
-                    color: "black",
-                    ":hover": { backgroundColor: "gold" },
-                  }}
-                >
-                  Search
-                </Button>
+                  sx={{ background: "white" }}
+                ></TextField>
+
+                <Stack direction="row" spacing={1} className="sider-flex-full">
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      filter(searchNews);
+                    }}
+                    className="sider-flex-full"
+                    sx={{
+                      backgroundColor: "white",
+                      color: "black",
+                      ":hover": { backgroundColor: "gold" },
+                    }}
+                  >
+                    Search
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      setSearchNews(defaultSearchNews);
+                      navigate("/news");
+                    }}
+                    sx={{
+                      backgroundColor: "white",
+                      color: "black",
+                      ":hover": { backgroundColor: "tomato" },
+                    }}
+                  >
+                    <ClearIcon />
+                  </Button>
+                </Stack>
               </div>
             </Box>
           )}

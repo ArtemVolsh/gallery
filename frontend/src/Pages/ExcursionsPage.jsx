@@ -36,6 +36,7 @@ const ExcursionsPage = () => {
         axios({
           method: "GET",
           url: `http://localhost:5000/api/excursions${query}`,
+          withCredentials: true,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         })
           .then(({ data }) => {

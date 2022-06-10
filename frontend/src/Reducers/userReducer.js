@@ -47,6 +47,7 @@ export default function userReducer(state = defaultState, action) {
         isAuth: false,
         role: 0,
       };
+			
     default:
       return state;
   }

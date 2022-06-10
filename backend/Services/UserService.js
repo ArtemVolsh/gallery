@@ -66,7 +66,7 @@ class UserService {
     const userDto = new UserDTO(user);
 
     const tokens = TokenService.generateTokens({ ...userDto });
-    console.log("User service Login: " + JSON.stringify(userDto));
+    console.log("User service Login: " + JSON.stringify(userDto, tokens));
     return { ...tokens, user: userDto };
   };
 
@@ -74,6 +74,25 @@ class UserService {
     const token = await TokenService.removeToken(refreshToken);
 
     return token;
+  };
+
+  refresh = async (refreshToken) => {
+    if (!refreshToken) {
+      throw ApiError.UnauthorizedError();
+    }
+    const userData = TokenService.validateRefreshToken(refreshToken);
+    const tokenFromDb = await TokenService.findToken(refreshToken);
+
+    if (!userData || !tokenFromDb) {
+      throw ApiError.UnauthorizedError();
+    }
+
+    const user = await UserModel.findById(userData.id);
+    const userDto = new UserDTO(user);
+    const tokens = TokenService.generateTokens({ ...userDto });
+
+    await TokenService.saveToken(userDto.id, tokens.refreshToken);
+    return { ...tokens, user: userDto };
   };
 
   getUserById = async (id) => {

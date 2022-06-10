@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   Box,
@@ -7,6 +7,8 @@ import {
   Switch,
   Stack,
   Typography,
+  Checkbox,
+  FormLabel,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -18,7 +20,7 @@ import {
 } from "@mui/x-date-pickers";
 
 import { createExcursion } from "../apiRequests/apiRequests";
-
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 const ExcSider = () => {
@@ -26,9 +28,7 @@ const ExcSider = () => {
   const userId = useSelector((state) => state.user.currentUser.id);
 
   const dispatch = useDispatch();
-
-  const [searchString, setSearchString] = useState("");
-  const [isSearch, setSearch] = useState(false);
+  const navigate = useNavigate();
 
   const noImageLink = "https://www.jquery-az.com/html/images/banana.jpg";
 
@@ -47,11 +47,12 @@ const ExcSider = () => {
     name: "",
     content: "",
     place: "",
-    date: new Date(),
     price: 0,
+    status: false,
   };
 
-  const [priceSearchType, setPriceSearchType] = useState();
+  const [isSearch, setSearch] = useState(false);
+
   const [excursion, setExcursion] = useState(defaultExcursion);
   const [searchExcursion, setSearchExcursion] = useState(
     defaultSearchExcursion
@@ -70,30 +71,46 @@ const ExcSider = () => {
     setExcursion({ ...excursion, [name]: value });
   };
 
+  const handleSearchInput = (e) => {
+    const { name, value } = e.target;
+    setSearchExcursion({ ...searchExcursion, [name]: value });
+  };
+  const handleSearchStatus = (e) => {
+    setSearchExcursion({ ...searchExcursion, status: e.target.checked });
+  };
+
   const formNavigationString = (post) => {
     let navString = "";
 
     for (let [key, value] of Object.entries(post)) {
       let firstOrConsequent = navString.includes("?") ? "&&" : "?";
 
-      let customKeys = ["price", "name"];
+      let customKeys = ["price", "status"];
 
       if (key === "price" && value !== defaultSearchExcursion[`${key}`])
-        navString += `${firstOrConsequent}${key}[${priceSearchType.type}]=${value}`;
+        navString += `${firstOrConsequent}${key}[lte]=${value}`;
 
-      if (key === "name" && value !== defaultSearchExcursion[`${key}`])
-        navString += `${firstOrConsequent}${key}[regex]=${value}&&[options]=i`;
+      if (key === "status")
+        navString += `${firstOrConsequent}${key}[eq]=${value ? 1 : 0}`;
 
       if (value !== defaultSearchExcursion[key] && !customKeys.includes(key))
         navString += `${firstOrConsequent}${key}[regex]=${value}`;
     }
 
+    console.log(navString);
+
     return navString;
   };
 
-  const handleSearchString = (e) => {
-    setSearchString(e.target.value);
+  const filter = (post) => {
+    const string = formNavigationString(post);
+    navigate("/excursions" + string);
+    return string;
   };
+
+  useEffect(() => {
+    console.log(formNavigationString(searchExcursion));
+  }, [searchExcursion]);
 
   function renderSider() {
     if (isAuth) {
@@ -191,7 +208,9 @@ const ExcSider = () => {
                 </LocalizationProvider>
                 <Button
                   variant="contained"
-                  onClick={() => createExcursion(excursion)}
+                  onClick={() => {
+                    createExcursion(excursion);
+                  }}
                   className="sider-flex-full"
                   sx={{
                     backgroundColor: "white",
@@ -207,43 +226,88 @@ const ExcSider = () => {
             <Box component="form">
               <div className="sider-flex">
                 <TextField
-                  value={searchString}
+                  name="name"
+                  value={searchExcursion.name}
+                  onInput={handleSearchInput}
                   variant="filled"
                   label="Excursion name"
-                  placeholder="Enter name..."
+                  placeholder="Enter excursion name..."
                   className="sider-flex-full"
-                  onChange={handleSearchString}
                   sx={{ background: "white" }}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          setSearchString("");
-                        }}
-                      >
-                        <ClearIcon />
-                      </Button>
-                    ),
-                  }}
                 ></TextField>
-                <Button
-                  variant="contained"
-                  onClick={() => {}}
+                <TextField
+                  name="content"
+                  value={searchExcursion.content}
+                  onInput={handleSearchInput}
+                  variant="filled"
+                  label="Excursion content"
+                  placeholder="Enter excursion content..."
                   className="sider-flex-full"
-                  sx={{
-                    backgroundColor: "white",
-                    color: "black",
-                    ":hover": { backgroundColor: "gold" },
-                  }}
-                >
-                  Search
-                </Button>
+                  sx={{ background: "white" }}
+                ></TextField>
+                <TextField
+                  name="place"
+                  value={searchExcursion.place}
+                  onInput={handleSearchInput}
+                  variant="filled"
+                  label="Excursion place"
+                  placeholder="Enter excursion place..."
+                  className="sider-flex-full"
+                  sx={{ background: "white" }}
+                ></TextField>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <TextField
+                    name="price"
+                    value={searchExcursion.price}
+                    onInput={handleSearchInput}
+                    variant="filled"
+                    type="number"
+                    label="Price under"
+                    className="sider-flex-full"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">₴</InputAdornment>
+                      ),
+                    }}
+                    sx={{ background: "white" }}
+                  ></TextField>
+                  <FormLabel sx={{ color: "white" }}>Active</FormLabel>
+                  <Checkbox
+                    checked={searchExcursion.status}
+                    onChange={handleSearchStatus}
+                  />
+                </Stack>
+
+                <Stack direction="row" spacing={1} className="sider-flex-full">
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      filter(searchExcursion);
+                    }}
+                    className="sider-flex-full"
+                    sx={{
+                      backgroundColor: "white",
+                      color: "black",
+                      ":hover": { backgroundColor: "gold" },
+                    }}
+                  >
+                    Search
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => {
+                      setSearchExcursion(defaultSearchExcursion);
+                      navigate("/excursions");
+                    }}
+                    sx={{
+                      backgroundColor: "white",
+                      color: "black",
+                      ":hover": { backgroundColor: "tomato" },
+                    }}
+                  >
+                    <ClearIcon />
+                  </Button>
+                </Stack>
               </div>
             </Box>
           )}

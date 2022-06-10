@@ -19,6 +19,8 @@ router
   .get(ExcursionsController.getAllExcursions)
   .post(ExcursionsController.createExcursion);
 
+router.route("/refresh").get(AuthenticationController.refresh);
+
 router.route("/users").post(AuthenticationController.getUserById);
 
 router.route("/registration").post(AuthenticationController.registration);

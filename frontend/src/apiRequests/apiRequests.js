@@ -1,24 +1,32 @@
 import axios from "axios";
-import { setAdmin, setUser } from "../Reducers/userReducer";
+import { setAdmin, setUser, updateUser } from "../Reducers/userReducer";
 const { log } = console;
 
 export const registration = async ({ email, password, phoneNumber }) => {
+  let message = "Something went wrong";
   try {
-    const response = await axios.post(
-      `http://localhost:5000/api/registration`,
-      {
-        email,
-        password,
-        phoneNumber,
-      }
-    );
+    axios
+      .post(
+        `http://localhost:5000/api/registration`,
+        {
+          email,
+          password,
+          phoneNumber,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        localStorage.setItem("token", response.data.accessToken);
 
-    let message;
-    if (response.status(200) || response.status(201)) {
-      message = "User is registered";
-    } else {
-      message = "Registration Error";
-    }
+        if (response.status(200) || response.status(201)) {
+          message = "User is registered";
+        } else {
+          message = "Registration Error";
+        }
+      });
+
     return message;
   } catch (e) {
     log(e);
@@ -29,21 +37,45 @@ export const registration = async ({ email, password, phoneNumber }) => {
 export const login = ({ email, password }) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`http://localhost:5000/api/login`, {
-        email,
-        password,
-      });
-
-      log(`Login Req: ${response}`);
-
-      if (response.data.user.role.includes("ADMIN")) {
-        dispatch(setAdmin(response.data.user));
-      } else {
-        dispatch(setUser(response.data.user));
-      }
+      axios
+        .post(
+          `http://localhost:5000/api/login`,
+          {
+            email,
+            password,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          console.log("Api Req Response");
+          console.log(response);
+          localStorage.setItem("token", response.data.accessToken);
+          if (response.data.user.role.includes("ADMIN")) {
+            dispatch(setAdmin(response.data.user));
+          } else {
+            dispatch(setUser(response.data.user));
+          }
+        });
     } catch (e) {
       log("Login Api Error" + e);
     }
+  };
+};
+
+export const checkAuth = () => {
+  return async (dispatch) => {
+    try {
+      axios
+        .get(`http://localhost:5000/api/refresh`, {
+          withCredentials: true,
+        })
+        .then(({ data }) => {
+          localStorage.setItem("token", data.accessToken);
+          dispatch(updateUser());
+        });
+    } catch (e) {}
   };
 };
 
@@ -87,25 +119,13 @@ export const createExcursion = async (excursion) => {
         excursion,
       })
       .then((response) => {
-        log("Exc Create Log");
-        log(response);
-        const controllerResponse = {
-          ...response,
-          controllerSuccess: true,
-          controllerMessage: "Excursion created!",
-        };
-        log("Exc Create Log 2");
-        log(controllerResponse);
+        console.log("Post created!");
 
-        return controllerResponse;
+        return response;
       })
       .catch((e) => {
-        const controllerError = {
-          ...e,
-          controllerSuccess: false,
-          controllerMessage: "Excursion creation failed!",
-        };
-        return controllerError;
+        console.log("Error occurred. Post wasn't created");
+        console.log(e);
       });
   } catch (e) {
     log(JSON.stringify(e));

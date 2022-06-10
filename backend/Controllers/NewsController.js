@@ -11,11 +11,23 @@ class NewsController {
     let queryString = JSON.stringify(reqQuery);
 
     queryString = queryString.replace(
-      /\b(gt|gte|lt|lte|in|regex)\b/g,
+      /\b(gt|gte|lt|lte|in|regex|options|eq)\b/g,
       (match) => `$${match}`
     );
 
-    const news = await News.find(JSON.parse(queryString));
+    let parsedString = JSON.parse(queryString);
+
+    console.log(parsedString);
+
+    for (let [key, value] of Object.entries(parsedString)) {
+      if (parsedString[key].hasOwnProperty("$regex")) {
+        parsedString[key] = { ...parsedString[key], $options: "i" };
+      }
+    }
+
+    console.log(parsedString);
+
+    const news = await News.find(parsedString);
 
     res.status(200).json({
       success: true,

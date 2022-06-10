@@ -29,8 +29,11 @@ const NewsPage = () => {
 
         axios({
           method: "GET",
-          url: "http://localhost:5000/api/news",
+          url: `http://localhost:5000/api/news${query}`,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         })
           .then(({ data }) => {
             setNews(data.data);

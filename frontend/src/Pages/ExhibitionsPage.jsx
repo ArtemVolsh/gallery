@@ -36,7 +36,8 @@ const ExhibitionsPage = () => {
 
         axios({
           method: "GET",
-          url: "http://localhost:5000/api/exhibitions",
+          url: `http://localhost:5000/api/exhibitions${query}`,
+          withCredentials: true,
           cancelToken: new axios.CancelToken((c) => (cancel = c)),
         })
           .then((response) => {

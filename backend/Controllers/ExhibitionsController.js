@@ -11,18 +11,21 @@ class ExhibitionsController {
     let queryString = JSON.stringify(reqQuery);
 
     queryString = queryString.replace(
-      /\b(gt|gte|lt|lte|in|regex|options)\b/g,
+      /\b(gt|gte|lt|lte|in|regex|options|eq)\b/g,
       (match) => `$${match}`
     );
 
     let parsedString = JSON.parse(queryString);
 
+    console.log(parsedString);
+
     for (let [key, value] of Object.entries(parsedString)) {
-      if (key == "options") {
-        parsedString.name = { ...parsedString.name, $options: "i" };
-        delete parsedString.options;
+      if (parsedString[key].hasOwnProperty("$regex")) {
+        parsedString[key] = { ...parsedString[key], $options: "i" };
       }
     }
+
+    console.log(parsedString);
 
     const exhs = await Exhibitions.find(parsedString);
 
